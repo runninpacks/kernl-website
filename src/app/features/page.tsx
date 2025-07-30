@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 
 interface Feature {
   id: string;
@@ -122,29 +122,7 @@ export default function FeaturesPage() {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      {/* Header */}
-      <header className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-6">
-        <Link href="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded flex items-center justify-center">
-            <span className="text-white font-bold text-sm">K</span>
-          </div>
-          <span className="text-white font-semibold text-lg sm:text-xl">KERNL</span>
-        </Link>
-        
-        <nav className="hidden lg:flex items-center space-x-6">
-          <Link href="/features" className="text-orange-500 font-medium">Features</Link>
-          <Link href="/integration" className="text-gray-300 hover:text-white transition-colors">Integration</Link>
-          <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</Link>
-          <Link href="/resources" className="text-gray-300 hover:text-white transition-colors">Resources</Link>
-          <Link href="/contact-us" className="text-gray-300 hover:text-white transition-colors">Contact us</Link>
-          <Link href="/reviews" className="text-gray-300 hover:text-white transition-colors">Reviews</Link>
-          <Link href="/tokenomics" className="text-gray-300 hover:text-white transition-colors">Tokenomics</Link>
-        </nav>
-        
-        <button className="hidden sm:block bg-white text-black px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm">
-          Launch App
-        </button>
-      </header>
+      <Navigation />
 
       {/* Main Content */}
       <main className="px-4 sm:px-8 py-8 sm:py-12">

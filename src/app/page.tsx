@@ -1,70 +1,11 @@
 'use client';
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Navigation from '@/components/Navigation';
 
 export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   return (
     <div className="bg-black text-white min-h-screen">
-      {/* Header Navigation */}
-      <header className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-6">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded flex items-center justify-center">
-            <span className="text-white font-bold text-sm">K</span>
-          </div>
-          <span className="text-white font-semibold text-lg sm:text-xl">KERNL</span>
-        </div>
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-          <Link href="/features" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Features</Link>
-          <Link href="/integration" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Integration</Link>
-          <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Pricing</Link>
-          <Link href="/resources" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Resources</Link>
-          <Link href="/contact-us" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Contact us</Link>
-          <Link href="/reviews" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Reviews</Link>
-          <Link href="/tokenomics" className="text-gray-300 hover:text-white transition-colors text-sm xl:text-base">Tokenomics</Link>
-        </nav>
-        
-        {/* Desktop CTA Button */}
-        <button className="hidden sm:block bg-white text-black px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm">
-          Launch App
-        </button>
-
-        {/* Mobile Menu Button */}
-        <button 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-gray-300 hover:text-white"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </header>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-gray-900 border-t border-gray-800">
-          <nav className="flex flex-col px-4 py-4 space-y-4">
-            <Link href="/features" className="text-gray-300 hover:text-white transition-colors py-2">Features</Link>
-            <Link href="/integration" className="text-gray-300 hover:text-white transition-colors py-2">Integration</Link>
-            <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors py-2">Pricing</Link>
-            <Link href="/resources" className="text-gray-300 hover:text-white transition-colors py-2">Resources</Link>
-            <Link href="/contact-us" className="text-gray-300 hover:text-white transition-colors py-2">Contact us</Link>
-            <Link href="/reviews" className="text-gray-300 hover:text-white transition-colors py-2">Reviews</Link>
-            <Link href="/tokenomics" className="text-gray-300 hover:text-white transition-colors py-2">Tokenomics</Link>
-            <button className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors mt-4">
-              Launch App
-            </button>
-          </nav>
-        </div>
-      )}
+      <Navigation />
 
       {/* Main Content */}
       <main className="flex flex-col items-center justify-center px-4 sm:px-8 py-8 sm:py-16">
