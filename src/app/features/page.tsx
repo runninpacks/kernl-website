@@ -122,17 +122,17 @@ export default function FeaturesPage() {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      {/* Header Navigation */}
-      <header className="flex items-center justify-between px-8 py-6">
+      {/* Header */}
+      <header className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-6">
         <Link href="/" className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded flex items-center justify-center">
             <span className="text-white font-bold text-sm">K</span>
           </div>
-          <span className="text-white font-semibold text-xl">KERNL</span>
+          <span className="text-white font-semibold text-lg sm:text-xl">KERNL</span>
         </Link>
         
-        <nav className="flex items-center space-x-8">
-          <Link href="/features" className="text-white font-medium">Features</Link>
+        <nav className="hidden lg:flex items-center space-x-6">
+          <Link href="/features" className="text-orange-500 font-medium">Features</Link>
           <Link href="/integration" className="text-gray-300 hover:text-white transition-colors">Integration</Link>
           <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</Link>
           <Link href="/resources" className="text-gray-300 hover:text-white transition-colors">Resources</Link>
@@ -141,45 +141,46 @@ export default function FeaturesPage() {
           <Link href="/tokenomics" className="text-gray-300 hover:text-white transition-colors">Tokenomics</Link>
         </nav>
         
-        <button className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">
+        <button className="hidden sm:block bg-white text-black px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm">
           Launch App
         </button>
       </header>
 
       {/* Main Content */}
-      <main className="px-8 py-16">
+      <main className="px-4 sm:px-8 py-8 sm:py-12">
         {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-6">Features</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+            Features
+          </h1>
+          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
             Everything you need to manage your token community using on-chain data
           </p>
         </div>
 
         {/* Search and Filter */}
-        <div className="max-w-4xl mx-auto mb-8">
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search features..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-orange-500"
-              />
-            </div>
-            <button className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors">
-              Search
-            </button>
+        <div className="mb-8 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
+          {/* Search */}
+          <div className="relative max-w-md w-full">
+            <input
+              type="text"
+              placeholder="Search features..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            />
+            <svg className="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
           </div>
 
-          {/* Category Tabs */}
+          {/* Category Filter */}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-full transition-colors ${
+                className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category.id
                     ? 'bg-orange-500 text-white'
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
@@ -192,57 +193,84 @@ export default function FeaturesPage() {
         </div>
 
         {/* Features Grid */}
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredFeatures.map((feature) => (
-              <div
-                key={feature.id}
-                className="bg-gray-900 rounded-xl p-6 hover:bg-gray-800 transition-colors cursor-pointer"
-                onClick={() => setExpandedFeature(expandedFeature === feature.id ? null : feature.id)}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-3xl">{feature.icon}</div>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium text-white ${getStatusColor(feature.status)}`}>
-                    {getStatusText(feature.status)}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p className="text-gray-400 mb-4">{feature.description}</p>
-                
-                {expandedFeature === feature.id && (
-                  <div className="mt-4 pt-4 border-t border-gray-700">
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-400">Category:</span>
-                        <span className="text-white capitalize">{feature.category}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-400">Status:</span>
-                        <span className="text-white">{getStatusText(feature.status)}</span>
-                      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {filteredFeatures.map((feature) => (
+            <div
+              key={feature.id}
+              className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 hover:border-gray-700 transition-colors cursor-pointer"
+              onClick={() => setExpandedFeature(expandedFeature === feature.id ? null : feature.id)}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl sm:text-3xl">{feature.icon}</span>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-1">
+                      {feature.title}
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className={`inline-block w-2 h-2 rounded-full ${getStatusColor(feature.status)}`}></span>
+                      <span className="text-xs text-gray-400">{getStatusText(feature.status)}</span>
                     </div>
-                    <button className="mt-4 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">
+                  </div>
+                </div>
+                <svg 
+                  className={`w-5 h-5 text-gray-400 transition-transform ${expandedFeature === feature.id ? 'rotate-180' : ''}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              
+              <p className="text-sm sm:text-base text-gray-300 mb-4">
+                {feature.description}
+              </p>
+
+              {expandedFeature === feature.id && (
+                <div className="mt-4 pt-4 border-t border-gray-800">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-400">Category</span>
+                      <span className="text-white capitalize">{feature.category}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-400">Status</span>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        feature.status === 'active' ? 'bg-green-500/20 text-green-400' :
+                        feature.status === 'beta' ? 'bg-yellow-500/20 text-yellow-400' :
+                        'bg-red-500/20 text-red-400'
+                      }`}>
+                        {getStatusText(feature.status)}
+                      </span>
+                    </div>
+                    <button className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
                       Learn More
                     </button>
                   </div>
-                )}
-                
-                {expandedFeature !== feature.id && (
-                  <div className="text-orange-500 text-sm font-medium">
-                    Click to expand →
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {filteredFeatures.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-400 text-lg">No features found matching your criteria.</p>
+                </div>
+              )}
             </div>
-          )}
+          ))}
         </div>
+
+        {/* Empty State */}
+        {filteredFeatures.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">🔍</div>
+            <h3 className="text-xl font-semibold mb-2">No features found</h3>
+            <p className="text-gray-400 mb-6">Try adjusting your search or filter criteria</p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+              }}
+              className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
