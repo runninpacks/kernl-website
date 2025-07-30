@@ -1,252 +1,303 @@
 'use client';
 
-import Link from 'next/link';
+import { useState } from 'react';
+import Navigation from '@/components/Navigation';
 
 interface Resource {
   id: string;
   title: string;
   description: string;
   category: string;
-  type: 'documentation' | 'tutorial' | 'video' | 'guide' | 'api';
-  icon: string;
-  link: string;
+  type: 'guide' | 'tutorial' | 'api' | 'video';
+  duration?: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  url: string;
 }
 
 const resources: Resource[] = [
   {
     id: '1',
     title: 'Getting Started Guide',
-    description: 'Learn how to set up KERNL for your token project in under 10 minutes.',
+    description: 'Complete walkthrough for setting up your first token project on KERNL',
     category: 'onboarding',
     type: 'guide',
-    icon: '🚀',
-    link: '#'
+    duration: '15 min',
+    difficulty: 'beginner',
+    url: '#'
   },
   {
     id: '2',
-    title: 'API Documentation',
-    description: 'Complete API reference for integrating KERNL with your applications.',
-    category: 'development',
-    type: 'api',
-    icon: '📚',
-    link: '#'
+    title: 'Wallet Segmentation Tutorial',
+    description: 'Learn how to segment holders by behavior, balance, and activity patterns',
+    category: 'features',
+    type: 'tutorial',
+    duration: '25 min',
+    difficulty: 'intermediate',
+    url: '#'
   },
   {
     id: '3',
-    title: 'Wallet Segmentation Tutorial',
-    description: 'Learn how to segment your holders by behavior, balance, and activity.',
-    category: 'features',
-    type: 'tutorial',
-    icon: '🎯',
-    link: '#'
+    title: 'Airdrop Best Practices',
+    description: 'Strategies for targeting and distributing airdrops effectively',
+    category: 'strategy',
+    type: 'guide',
+    duration: '20 min',
+    difficulty: 'intermediate',
+    url: '#'
   },
   {
     id: '4',
-    title: 'Airdrop Best Practices',
-    description: 'Best practices for targeting and executing airdrops using KERNL.',
+    title: 'Symbol Score Explained',
+    description: 'Understanding reputation scoring and how to customize algorithms',
     category: 'features',
-    type: 'guide',
-    icon: '🎁',
-    link: '#'
+    type: 'video',
+    duration: '12 min',
+    difficulty: 'advanced',
+    url: '#'
   },
   {
     id: '5',
-    title: 'Symbol Score Explained',
-    description: 'Understanding how Symbol Score works and how to use it effectively.',
+    title: 'DAO Governance Tracking',
+    description: 'Monitor voting patterns and governance engagement metrics',
     category: 'features',
-    type: 'guide',
-    icon: '⭐',
-    link: '#'
+    type: 'tutorial',
+    duration: '18 min',
+    difficulty: 'intermediate',
+    url: '#'
   },
   {
     id: '6',
-    title: 'DAO Governance Tracking',
-    description: 'How to track voting patterns and governance engagement in your DAO.',
-    category: 'features',
-    type: 'tutorial',
-    icon: '🗳️',
-    link: '#'
+    title: 'Multi-token Setup',
+    description: 'Configure KERNL to track multiple tokens across different projects',
+    category: 'development',
+    type: 'guide',
+    duration: '30 min',
+    difficulty: 'advanced',
+    url: '#'
   },
   {
     id: '7',
-    title: 'Multi-token Setup',
-    description: 'Configure KERNL to track multiple tokens across different projects.',
-    category: 'features',
-    type: 'tutorial',
-    icon: '🔗',
-    link: '#'
+    title: 'Community Management',
+    description: 'Best practices for managing token communities using on-chain data',
+    category: 'strategy',
+    type: 'guide',
+    duration: '22 min',
+    difficulty: 'intermediate',
+    url: '#'
   },
   {
     id: '8',
-    title: 'Community Management',
-    description: 'Strategies for managing token communities using on-chain data.',
-    category: 'strategy',
-    type: 'guide',
-    icon: '👥',
-    link: '#'
+    title: 'API Documentation',
+    description: 'Complete API reference for custom integrations and automations',
+    category: 'development',
+    type: 'api',
+    duration: '45 min',
+    difficulty: 'advanced',
+    url: '#'
   }
 ];
 
-// Categories for future filtering functionality
-// const categories = [
-//   { id: 'all', name: 'All Resources' },
-//   { id: 'onboarding', name: 'Getting Started' },
-//   { id: 'features', name: 'Features' },
-//   { id: 'development', name: 'Development' },
-//   { id: 'strategy', name: 'Strategy' }
-// ];
+const categories = [
+  { id: 'all', name: 'All Resources' },
+  { id: 'onboarding', name: 'Getting Started' },
+  { id: 'features', name: 'Features' },
+  { id: 'development', name: 'Development' },
+  { id: 'strategy', name: 'Strategy' }
+];
 
 export default function ResourcesPage() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<'all' | 'beginner' | 'intermediate' | 'advanced'>('all');
+
+  const filteredResources = resources.filter(resource => {
+    const matchesCategory = selectedCategory === 'all' || resource.category === selectedCategory;
+    const matchesDifficulty = selectedDifficulty === 'all' || resource.difficulty === selectedDifficulty;
+    return matchesCategory && matchesDifficulty;
+  });
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'beginner': return 'bg-green-500';
+      case 'intermediate': return 'bg-yellow-500';
+      case 'advanced': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'guide': return '📖';
+      case 'tutorial': return '🎥';
+      case 'api': return '🔧';
+      case 'video': return '🎬';
+      default: return '📄';
+    }
+  };
+
   return (
     <div className="bg-black text-white min-h-screen">
-      {/* Header Navigation */}
-      <header className="flex items-center justify-between px-8 py-6">
-        <Link href="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded flex items-center justify-center">
-            <span className="text-white font-bold text-sm">K</span>
-          </div>
-          <span className="text-white font-semibold text-xl">KERNL</span>
-        </Link>
-        
-        <nav className="flex items-center space-x-8">
-          <Link href="/features" className="text-gray-300 hover:text-white transition-colors">Features</Link>
-          <Link href="/integration" className="text-gray-300 hover:text-white transition-colors">Integration</Link>
-          <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</Link>
-          <Link href="/resources" className="text-white font-medium">Resources</Link>
-          <Link href="/contact-us" className="text-gray-300 hover:text-white transition-colors">Contact us</Link>
-          <Link href="/reviews" className="text-gray-300 hover:text-white transition-colors">Reviews</Link>
-          <Link href="/tokenomics" className="text-gray-300 hover:text-white transition-colors">Tokenomics</Link>
-        </nav>
-        
-        <button className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">
-          Launch App
-        </button>
-      </header>
+      <Navigation />
 
       {/* Main Content */}
-      <main className="px-8 py-16">
+      <main className="px-4 sm:px-8 py-8 sm:py-12">
         {/* Page Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-6">Resources</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+            Resources
+          </h1>
+          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
             Everything you need to master KERNL and manage your token community effectively
           </p>
         </div>
 
-        {/* Quick Help Section */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Need Help?</h2>
-            <p className="text-lg mb-6">
-              Can&apos;t find what you&apos;re looking for? Our team is here to help.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="mailto:contact@kernl.xyz"
-                className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+        {/* Filters */}
+        <div className="mb-8 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedCategory === category.id
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                }`}
               >
-                Contact Support
-              </a>
-              <a
-                href="#"
-                className="border border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-black transition-colors"
-              >
-                Join Discord
-              </a>
-            </div>
+                {category.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Difficulty Filter */}
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedDifficulty('all')}
+              className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                selectedDifficulty === 'all'
+                  ? 'bg-orange-500 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              All Levels
+            </button>
+            <button
+              onClick={() => setSelectedDifficulty('beginner')}
+              className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                selectedDifficulty === 'beginner'
+                  ? 'bg-green-500 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Beginner
+            </button>
+            <button
+              onClick={() => setSelectedDifficulty('intermediate')}
+              className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                selectedDifficulty === 'intermediate'
+                  ? 'bg-yellow-500 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Intermediate
+            </button>
+            <button
+              onClick={() => setSelectedDifficulty('advanced')}
+              className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                selectedDifficulty === 'advanced'
+                  ? 'bg-red-500 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Advanced
+            </button>
           </div>
         </div>
 
         {/* Resources Grid */}
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {resources.map((resource) => (
-              <div
-                key={resource.id}
-                className="bg-gray-900 rounded-xl p-6 hover:bg-gray-800 transition-colors"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-3xl">{resource.icon}</div>
-                  <span className="px-2 py-1 bg-gray-700 rounded-full text-xs font-medium text-gray-300">
-                    {resource.type}
-                  </span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredResources.map((resource) => (
+            <div
+              key={resource.id}
+              className="bg-gray-900 rounded-xl p-6 sm:p-8 border border-gray-800 hover:border-gray-700 transition-colors"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl sm:text-3xl">{getTypeIcon(resource.type)}</span>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-1">
+                      {resource.title}
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <span className={`inline-block w-2 h-2 rounded-full ${getDifficultyColor(resource.difficulty)}`}></span>
+                      <span className="text-xs text-gray-400 capitalize">{resource.difficulty}</span>
+                    </div>
+                  </div>
                 </div>
-                
-                <h3 className="text-xl font-semibold mb-3">{resource.title}</h3>
-                <p className="text-gray-400 mb-4">{resource.description}</p>
-                
-                <a
-                  href={resource.link}
-                  className="inline-flex items-center text-orange-500 hover:text-orange-400 transition-colors"
-                >
-                  Learn More
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
-                  </svg>
-                </a>
               </div>
-            ))}
-          </div>
+              
+              <p className="text-sm sm:text-base text-gray-300 mb-4">
+                {resource.description}
+              </p>
+
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+                <span>Duration:</span>
+                <span>{resource.duration}</span>
+              </div>
+
+              <button className="w-full bg-orange-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
+                View Resource
+              </button>
+            </div>
+          ))}
         </div>
 
-        {/* FAQ Section */}
-        <div className="max-w-4xl mx-auto mt-20">
-          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            <div className="bg-gray-900 rounded-xl p-6">
-              <h3 className="text-lg font-semibold mb-3">How do I get started with KERNL?</h3>
-              <p className="text-gray-400">
-                Simply connect your wallet and start tracking your token. No account creation or KYC required - we only read public on-chain data.
-              </p>
-            </div>
-            <div className="bg-gray-900 rounded-xl p-6">
-              <h3 className="text-lg font-semibold mb-3">What tokens do you support?</h3>
-              <p className="text-gray-400">
-                We support all major Solana tokens. If you have a custom token, contact us for integration support.
-              </p>
-            </div>
-            <div className="bg-gray-900 rounded-xl p-6">
-              <h3 className="text-lg font-semibold mb-3">How does Symbol Score work?</h3>
-              <p className="text-gray-400">
-                Symbol Score is a reputation metric based on holder behavior, engagement, and loyalty. It helps identify your most valuable community members.
-              </p>
-            </div>
-            <div className="bg-gray-900 rounded-xl p-6">
-              <h3 className="text-lg font-semibold mb-3">Can I export my data?</h3>
-              <p className="text-gray-400">
-                Yes, all data can be exported via our API. Pro and Org plans include advanced export options and data analytics.
-              </p>
-            </div>
+        {/* Empty State */}
+        {filteredResources.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">📚</div>
+            <h3 className="text-xl font-semibold mb-2">No resources found</h3>
+            <p className="text-gray-400 mb-6">Try adjusting your filters</p>
+            <button
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedDifficulty('all');
+              }}
+              className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+            >
+              Clear Filters
+            </button>
           </div>
-        </div>
+        )}
 
-        {/* Community Section */}
-        <div className="max-w-4xl mx-auto mt-20">
-          <h2 className="text-3xl font-bold text-center mb-12">Join Our Community</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-gray-900 rounded-xl p-6 text-center">
-              <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-lg font-semibold mb-2">Discord</h3>
-              <p className="text-gray-400 mb-4">Join discussions with other token teams</p>
-              <a href="#" className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
-                Join Server
-              </a>
-            </div>
-            <div className="bg-gray-900 rounded-xl p-6 text-center">
-              <div className="text-4xl mb-4">🐦</div>
-              <h3 className="text-lg font-semibold mb-2">Twitter</h3>
-              <p className="text-gray-400 mb-4">Follow for updates and announcements</p>
-              <a href="https://twitter.com/kernl_xyz" className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
-                Follow @kernl_xyz
-              </a>
-            </div>
-            <div className="bg-gray-900 rounded-xl p-6 text-center">
-              <div className="text-4xl mb-4">📧</div>
-              <h3 className="text-lg font-semibold mb-2">Newsletter</h3>
-              <p className="text-gray-400 mb-4">Get product updates and tips</p>
-              <a href="#" className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
-                Subscribe
-              </a>
+        {/* Quick Help Section */}
+        <div className="mt-16 sm:mt-20 max-w-4xl mx-auto">
+          <div className="bg-gray-900 rounded-xl p-6 sm:p-8">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4">Quick Help</h2>
+            <p className="text-gray-300 text-sm sm:text-base mb-6">
+              Can&apos;t find what you&apos;re looking for? Our team is here to help.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-3">Documentation</h3>
+                <p className="text-sm text-gray-400 mb-4">
+                  Comprehensive guides and tutorials for all KERNL features
+                </p>
+                <button className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
+                  Browse Docs
+                </button>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold mb-3">Community</h3>
+                <p className="text-sm text-gray-400 mb-4">
+                  Join our Discord for support and community discussions
+                </p>
+                <button className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
+                  Join Discord
+                </button>
+              </div>
             </div>
           </div>
         </div>
