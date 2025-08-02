@@ -50,7 +50,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchPriceData = async () => {
       try {
-        const response = await fetch(`https://public-api.birdeye.so/defi/price?address=${contractAddress}&ui_amount_mode=raw`, {
+        const response = await fetch(`https://public-api.birdeye.so/defi/v3/pair/overview/single?address=${contractAddress}`, {
           headers: {
             'X-API-KEY': '8ff249064e784babad914121682d3763',
             'accept': 'application/json',
@@ -69,11 +69,13 @@ export default function HomePage() {
         console.log('Birdeye API response:', data); // Debug log
         
         if (data.success && data.data && Object.keys(data.data).length > 0) {
-          const price = data.data.value || 0;
-          const change24h = data.data.priceChange24h || 0;
-          // For SOL, we'll use placeholder values for volume and market cap since they're not in this endpoint
-          const volume24h = 0; // Would need different endpoint for volume data
-          const marketCap = 0; // Would need different endpoint for market cap data
+          const price = data.data.price || 0;
+          // For pair data, we'll use volume_24h as the main volume metric
+          const volume24h = data.data.volume_24h || 0;
+          // Calculate market cap using liquidity as approximation
+          const marketCap = data.data.liquidity || 0;
+          // For now, we'll set change to 0 since it's not directly available in pair data
+          const change24h = 0; // Would need different endpoint for price change data
 
           setPriceData({
             price,
