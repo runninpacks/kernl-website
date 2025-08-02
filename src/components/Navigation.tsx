@@ -75,26 +75,6 @@ export default function Navigation() {
           >
             Contact us
           </Link>
-          <Link 
-            href="/reviews" 
-            className={`transition-colors text-sm xl:text-base ${
-              isActive('/reviews') 
-                ? 'text-orange-500 font-medium' 
-                : 'text-gray-300 hover:text-white'
-            }`}
-          >
-            Reviews
-          </Link>
-          <Link 
-            href="/tokenomics" 
-            className={`transition-colors text-sm xl:text-base ${
-              isActive('/tokenomics') 
-                ? 'text-orange-500 font-medium' 
-                : 'text-gray-300 hover:text-white'
-            }`}
-          >
-            Tokenomics
-          </Link>
         </nav>
         
         {/* Desktop CTA Button */}
@@ -175,28 +155,6 @@ export default function Navigation() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact us
-            </Link>
-            <Link 
-              href="/reviews" 
-              className={`transition-colors py-2 ${
-                isActive('/reviews') 
-                  ? 'text-orange-500 font-medium' 
-                  : 'text-gray-300 hover:text-white'
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Reviews
-            </Link>
-            <Link 
-              href="/tokenomics" 
-              className={`transition-colors py-2 ${
-                isActive('/tokenomics') 
-                  ? 'text-orange-500 font-medium' 
-                  : 'text-gray-300 hover:text-white'
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tokenomics
             </Link>
             <button className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors mt-4">
               Launch App
