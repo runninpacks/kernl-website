@@ -23,8 +23,8 @@ export default function Navigation() {
           <span className="text-white font-semibold text-lg sm:text-xl">KERNL</span>
         </Link>
         
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+        {/* Desktop Navigation - Centered */}
+        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 absolute left-1/2 transform -translate-x-1/2">
           <Link 
             href="/features" 
             className={`transition-colors text-sm xl:text-base ${
