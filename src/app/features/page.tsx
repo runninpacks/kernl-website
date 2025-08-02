@@ -10,6 +10,9 @@ interface Feature {
   category: string;
   icon: string;
   status: 'active' | 'beta' | 'deprecated';
+  detailedDescription: string;
+  useCases: string[];
+  benefits: string[];
 }
 
 const features: Feature[] = [
@@ -19,7 +22,20 @@ const features: Feature[] = [
     description: 'See who\'s buying, selling, staking, or inactive across your token ecosystem with real-time on-chain data.',
     category: 'analytics',
     icon: '📊',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Track every wallet interaction with your token ecosystem in real-time. Monitor buying patterns, selling behavior, staking activities, and governance participation to understand your community dynamics.',
+    useCases: [
+      'Identify active vs passive holders',
+      'Monitor whale movements',
+      'Track staking participation',
+      'Analyze governance engagement'
+    ],
+    benefits: [
+      'Real-time insights into community behavior',
+      'Identify potential market manipulation',
+      'Optimize token distribution strategies',
+      'Improve governance participation'
+    ]
   },
   {
     id: '2',
@@ -27,7 +43,20 @@ const features: Feature[] = [
     description: 'Group wallets by balance, loyalty, voting activity, or custom criteria to target specific holder cohorts.',
     category: 'segmentation',
     icon: '🎯',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Create sophisticated holder cohorts based on multiple on-chain data points. Segment by balance, holding duration, voting patterns, and custom behavioral criteria.',
+    useCases: [
+      'Target airdrops to specific cohorts',
+      'Identify diamond hands vs paper hands',
+      'Segment by governance participation',
+      'Create custom behavioral groups'
+    ],
+    benefits: [
+      'Precise targeting for campaigns',
+      'Better understanding of holder types',
+      'Optimized reward distribution',
+      'Improved community engagement'
+    ]
   },
   {
     id: '3',
@@ -35,7 +64,20 @@ const features: Feature[] = [
     description: 'Automate rewards based on behavior, time held, or Symbol Score with precise wallet targeting.',
     category: 'rewards',
     icon: '🎁',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Automate targeted airdrops using sophisticated criteria including Symbol Score, holding duration, voting participation, and custom behavioral metrics.',
+    useCases: [
+      'Reward long-term holders',
+      'Target governance participants',
+      'Airdrop to high Symbol Score wallets',
+      'Compensate for network contributions'
+    ],
+    benefits: [
+      'Automated reward distribution',
+      'Fair and transparent targeting',
+      'Reduced manual overhead',
+      'Improved community satisfaction'
+    ]
   },
   {
     id: '4',
@@ -43,7 +85,20 @@ const features: Feature[] = [
     description: 'Assign non-financial reputation metrics to holders based on contribution, engagement, and loyalty.',
     category: 'reputation',
     icon: '⭐',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Calculate a comprehensive reputation score for each wallet based on their on-chain behavior, contributions, and engagement with your ecosystem.',
+    useCases: [
+      'Prioritize governance proposals',
+      'Weight voting power',
+      'Target high-value community members',
+      'Identify ecosystem contributors'
+    ],
+    benefits: [
+      'Objective reputation measurement',
+      'Fair governance weighting',
+      'Recognition of contributions',
+      'Improved community incentives'
+    ]
   },
   {
     id: '5',
@@ -51,7 +106,20 @@ const features: Feature[] = [
     description: 'Visualize the journey from mint to stake to exit with detailed conversion tracking.',
     category: 'analytics',
     icon: '🔄',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Track user journeys through your ecosystem with detailed conversion funnels. Understand how users progress from initial interaction to deep engagement.',
+    useCases: [
+      'Optimize user onboarding',
+      'Identify drop-off points',
+      'Improve conversion rates',
+      'Track feature adoption'
+    ],
+    benefits: [
+      'Data-driven optimization',
+      'Improved user experience',
+      'Higher engagement rates',
+      'Better feature adoption'
+    ]
   },
   {
     id: '6',
@@ -59,7 +127,20 @@ const features: Feature[] = [
     description: 'Track behavior across multiple tokens and projects in a unified dashboard.',
     category: 'platform',
     icon: '🔗',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Manage multiple tokens and projects from a single dashboard. Track cross-token behavior and understand how users interact across your entire ecosystem.',
+    useCases: [
+      'Cross-token analysis',
+      'Ecosystem-wide insights',
+      'Multi-project management',
+      'Portfolio tracking'
+    ],
+    benefits: [
+      'Unified ecosystem view',
+      'Cross-token insights',
+      'Simplified management',
+      'Comprehensive analytics'
+    ]
   },
   {
     id: '7',
@@ -67,7 +148,20 @@ const features: Feature[] = [
     description: 'Direct blockchain data feeds without relying on Web2 APIs or user accounts.',
     category: 'infrastructure',
     icon: '⛓️',
-    status: 'active'
+    status: 'active',
+    detailedDescription: 'Access real-time blockchain data directly without intermediaries. No Web2 dependencies, no user accounts required - pure on-chain data streams.',
+    useCases: [
+      'Real-time transaction monitoring',
+      'Direct blockchain data access',
+      'No API rate limits',
+      'Trustless data verification'
+    ],
+    benefits: [
+      'Real-time data access',
+      'No rate limiting',
+      'Trustless verification',
+      'Reduced infrastructure costs'
+    ]
   },
   {
     id: '8',
@@ -75,7 +169,20 @@ const features: Feature[] = [
     description: 'Monitor voting patterns, proposal participation, and governance engagement metrics.',
     category: 'governance',
     icon: '🗳️',
-    status: 'beta'
+    status: 'beta',
+    detailedDescription: 'Comprehensive governance analytics for DAOs. Track proposal creation, voting patterns, voter turnout, and governance health metrics.',
+    useCases: [
+      'Monitor governance health',
+      'Track voting participation',
+      'Analyze proposal success rates',
+      'Identify governance trends'
+    ],
+    benefits: [
+      'Improved governance transparency',
+      'Better decision-making insights',
+      'Enhanced community participation',
+      'Stronger DAO governance'
+    ]
   }
 ];
 
@@ -94,6 +201,7 @@ export default function FeaturesPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedFeature, setExpandedFeature] = useState<string | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
 
   const filteredFeatures = features.filter(feature => {
     const matchesCategory = selectedCategory === 'all' || feature.category === selectedCategory;
@@ -222,7 +330,13 @@ export default function FeaturesPage() {
                         {getStatusText(feature.status)}
                       </span>
                     </div>
-                    <button className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
+                    <button 
+                      className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedFeature(feature);
+                      }}
+                    >
                       Learn More
                     </button>
                   </div>
@@ -247,6 +361,86 @@ export default function FeaturesPage() {
             >
               Clear Filters
             </button>
+          </div>
+        )}
+
+        {/* Feature Modal */}
+        {selectedFeature && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6 sm:p-8">
+                {/* Header */}
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-3xl sm:text-4xl">{selectedFeature.icon}</span>
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+                        {selectedFeature.title}
+                      </h2>
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                        selectedFeature.status === 'active' ? 'bg-green-500/20 text-green-400' :
+                        selectedFeature.status === 'beta' ? 'bg-yellow-500/20 text-yellow-400' :
+                        'bg-red-500/20 text-red-400'
+                      }`}>
+                        {getStatusText(selectedFeature.status)}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSelectedFeature(null)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Content */}
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-3">Overview</h3>
+                    <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+                      {selectedFeature.detailedDescription}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-3">Use Cases</h3>
+                    <ul className="space-y-2">
+                      {selectedFeature.useCases.map((useCase, index) => (
+                        <li key={index} className="flex items-start space-x-2">
+                          <span className="text-orange-500 mt-1">•</span>
+                          <span className="text-gray-300 text-sm sm:text-base">{useCase}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-3">Benefits</h3>
+                    <ul className="space-y-2">
+                      {selectedFeature.benefits.map((benefit, index) => (
+                        <li key={index} className="flex items-start space-x-2">
+                          <span className="text-green-500 mt-1">✓</span>
+                          <span className="text-gray-300 text-sm sm:text-base">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="mt-8 pt-6 border-t border-gray-800">
+                  <button
+                    onClick={() => setSelectedFeature(null)}
+                    className="w-full bg-orange-500 text-white py-3 px-6 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </main>

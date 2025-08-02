@@ -24,9 +24,8 @@ export default function HomePage() {
   const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
 
   useEffect(() => {
-    // Set target date to 2 days from now
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 2);
+    // Set target date to a fixed date (2 days from a specific date to ensure consistency)
+    const targetDate = new Date('2025-01-02T00:00:00Z'); // Fixed target date
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -176,14 +175,44 @@ export default function HomePage() {
           </div>
         </div>
 
+
+
+        {/* Hero Section */}
+        <div className="text-center max-w-4xl mb-12 sm:mb-16 px-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 leading-tight">
+            Crypto-native CRM for<br />
+            token teams & DAOs
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto">
+            Track wallet behavior, segment holders, assign reputation scores, and target airdrops — all using on-chain data without Web2 dependencies.
+          </p>
+          <button className="bg-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/25">
+            Coming Soon
+          </button>
+        </div>
+
         {/* Live Price Section */}
         <div className="mb-8 sm:mb-12 w-full max-w-2xl">
           <div className="bg-gradient-to-r from-gray-900 to-gray-800 border border-gray-700 rounded-2xl p-6 sm:p-8">
             {/* Contract Address */}
             <div className="text-center mb-6">
               <h3 className="text-sm sm:text-base text-gray-400 mb-2">Contract Address</h3>
-              <div className="bg-gray-800 rounded-lg p-3 font-mono text-xs sm:text-sm text-orange-500 break-all">
-                {contractAddress}
+              <div className="flex items-center justify-center space-x-2">
+                <div className="bg-gray-800 rounded-lg p-3 font-mono text-xs sm:text-sm text-orange-500 break-all flex-1 max-w-xs">
+                  {contractAddress}
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(contractAddress);
+                    // You could add a toast notification here
+                  }}
+                  className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-lg transition-colors"
+                  title="Copy to clipboard"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
               </div>
             </div>
 
@@ -237,20 +266,6 @@ export default function HomePage() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Hero Section */}
-        <div className="text-center max-w-4xl mb-12 sm:mb-16 px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 leading-tight">
-            Crypto-native CRM for<br />
-            token teams & DAOs
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto">
-            Track wallet behavior, segment holders, assign reputation scores, and target airdrops — all using on-chain data without Web2 dependencies.
-          </p>
-          <button className="bg-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/25">
-            Coming Soon
-          </button>
         </div>
 
         {/* Dashboard Preview */}
