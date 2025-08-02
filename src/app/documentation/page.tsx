@@ -36,7 +36,7 @@ export default function DocumentationPage() {
           <div className="bg-gray-900 rounded-2xl p-6 sm:p-8 mb-8 border border-gray-800">
             <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">Abstract</h3>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-              This whitepaper presents KERNL, a crypto-native Customer Relationship Management (CRM) platform engineered specifically for the unique demands of token teams and Decentralized Autonomous Organizations (DAOs). Unlike traditional Web2 CRMs, KERNL operates as a self-contained, trustless system that leverages real-time on-chain data streams to provide comprehensive insights into token holder behavior, reputation, and engagement. The platform's core architecture facilitates advanced holder segmentation, dynamic reputation scoring (Symbol Score), and highly targeted airdrop campaigns, all without relying on off-chain dependencies. KERNL's mission is to empower on-chain communities with the tools required to foster sustainable growth, enhance governance, and drive meaningful participant engagement.
+              This whitepaper presents KERNL, a crypto-native Customer Relationship Management (CRM) platform engineered specifically for the unique demands of token teams and Decentralized Autonomous Organizations (DAOs). Unlike traditional Web2 CRMs, KERNL operates as a self-contained, trustless system that leverages real-time on-chain data streams to provide comprehensive insights into token holder behavior, reputation, and engagement. The platform&apos;s core architecture facilitates advanced holder segmentation, dynamic reputation scoring (Symbol Score), and highly targeted airdrop campaigns, all without relying on off-chain dependencies. KERNL&apos;s mission is to empower on-chain communities with the tools required to foster sustainable growth, enhance governance, and drive meaningful participant engagement.
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export default function DocumentationPage() {
           <div className="bg-gray-900 rounded-2xl p-6 sm:p-8 mb-8 border border-gray-800">
             <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">2. The KERNL Solution: Crypto-native CRM</h3>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-              KERNL is a crypto-native CRM platform that provides a unified dashboard for token teams and DAOs to manage their communities. By directly analyzing immutable on-chain data, KERNL eliminates the need for manual data aggregation and subjective metrics. The platform's architecture is built on three core pillars:
+              KERNL is a crypto-native CRM platform that provides a unified dashboard for token teams and DAOs to manage their communities. By directly analyzing immutable on-chain data, KERNL eliminates the need for manual data aggregation and subjective metrics. The platform&apos;s architecture is built on three core pillars:
             </p>
             <ul className="list-disc list-inside text-gray-300 text-sm sm:text-base space-y-2 ml-4">
               <li><strong>On-Chain Data Ingestion:</strong> A robust data pipeline continuously monitors blockchain activity, capturing every relevant transaction, including token transfers, staking events, and governance votes.</li>
@@ -77,7 +77,7 @@ export default function DocumentationPage() {
           <div className="bg-gray-900 rounded-2xl p-6 sm:p-8 mb-8 border border-gray-800">
             <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">3. Core Architectural Framework</h3>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-              The KERNL platform's operational model can be conceptualized as a feedback loop.
+              The KERNL platform&apos;s operational model can be conceptualized as a feedback loop.
             </p>
             
             <div className="space-y-6">
@@ -135,7 +135,7 @@ export default function DocumentationPage() {
               <div>
                 <h4 className="text-lg font-semibold mb-2 text-orange-500">4.2. Holder Segmentation</h4>
                 <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-2">
-                  The platform's segmentation engine allows for the creation of custom holder cohorts based on a wide range of on-chain data points. This functionality goes beyond simple token balances to include:
+                  The platform&apos;s segmentation engine allows for the creation of custom holder cohorts based on a wide range of on-chain data points. This functionality goes beyond simple token balances to include:
                 </p>
                 <ul className="list-disc list-inside text-gray-300 text-sm sm:text-base space-y-1 ml-4">
                   <li>Holding duration</li>
@@ -148,7 +148,7 @@ export default function DocumentationPage() {
               <div>
                 <h4 className="text-lg font-semibold mb-2 text-orange-500">4.3. Symbol Score: The On-Chain Reputation Metric</h4>
                 <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                  The Symbol Score is a non-financial reputation metric that quantifies a wallet's value to the community. By assigning a score based on verifiable on-chain actions, KERNL provides a transparent and objective measure of contribution, engagement, and loyalty.
+                  The Symbol Score is a non-financial reputation metric that quantifies a wallet&apos;s value to the community. By assigning a score based on verifiable on-chain actions, KERNL provides a transparent and objective measure of contribution, engagement, and loyalty.
                 </p>
               </div>
 
@@ -160,7 +160,7 @@ export default function DocumentationPage() {
                 <ul className="list-disc list-inside text-gray-300 text-sm sm:text-base space-y-1 ml-4">
                   <li>Wallets in the top 15% by Symbol Score.</li>
                   <li>Addresses that have participated in at least two governance votes.</li>
-                  <li>Long-term holders ("Diamond Hands").</li>
+                  <li>Long-term holders (&quot;Diamond Hands&quot;).</li>
                 </ul>
               </div>
 
