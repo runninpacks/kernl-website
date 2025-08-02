@@ -26,7 +26,7 @@ export default function HomePage() {
   useEffect(() => {
     // Set a fixed target date that everyone sees the same countdown
     // This ensures all users see the same countdown regardless of when they visit
-    const targetDate = new Date('2025-01-15T00:00:00Z'); // Fixed target date
+    const targetDate = new Date('2025-08-03T08:00:00Z'); // Fixed target date - August 3rd at 8AM
 
     const timer = setInterval(() => {
       const currentTime = new Date().getTime();
