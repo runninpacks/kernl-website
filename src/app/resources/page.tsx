@@ -246,7 +246,7 @@ export default function ResourcesPage() {
               </div>
 
               <button className="w-full bg-orange-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
-                View Resource
+                Request Access
               </button>
             </div>
           ))}
