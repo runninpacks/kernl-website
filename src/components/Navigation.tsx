@@ -66,6 +66,16 @@ export default function Navigation() {
             Resources
           </Link>
           <Link 
+            href="/documentation" 
+            className={`transition-colors text-sm xl:text-base ${
+              isActive('/documentation') 
+                ? 'text-orange-500 font-medium' 
+                : 'text-gray-300 hover:text-white'
+            }`}
+          >
+            Documentation
+          </Link>
+          <Link 
             href="/contact-us" 
             className={`transition-colors text-sm xl:text-base ${
               isActive('/contact-us') 
@@ -144,6 +154,17 @@ export default function Navigation() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Resources
+            </Link>
+            <Link 
+              href="/documentation" 
+              className={`transition-colors py-2 ${
+                isActive('/documentation') 
+                  ? 'text-orange-500 font-medium' 
+                  : 'text-gray-300 hover:text-white'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Documentation
             </Link>
             <Link 
               href="/contact-us" 
