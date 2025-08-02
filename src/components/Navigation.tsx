@@ -87,10 +87,7 @@ export default function Navigation() {
           </Link>
         </nav>
         
-        {/* Desktop CTA Button */}
-        <button className="hidden sm:block bg-white text-black px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm">
-          Launch App
-        </button>
+
 
         {/* Mobile Menu Button */}
         <button 
@@ -177,9 +174,6 @@ export default function Navigation() {
             >
               Contact us
             </Link>
-            <button className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors mt-4">
-              Launch App
-            </button>
           </nav>
         </div>
       )}
