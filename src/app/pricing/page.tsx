@@ -34,7 +34,7 @@ const pricingPlans: PricingPlan[] = [
       'On-chain data feeds',
       'Basic reporting'
     ],
-    cta: 'Start Free'
+    cta: 'Contact Sales'
   },
   {
     id: 'pro',
@@ -55,7 +55,7 @@ const pricingPlans: PricingPlan[] = [
       'Custom integrations'
     ],
     popular: true,
-    cta: 'Start Pro',
+    cta: 'Contact Sales',
     badge: 'Most Popular'
   },
   {
