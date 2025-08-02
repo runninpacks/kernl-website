@@ -21,7 +21,7 @@ export default function HomePage() {
   });
 
   // Contract address - you can update this when you have the final address
-  const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
+  const contractAddress = "";
 
   useEffect(() => {
     // Set a fixed target date that everyone sees the same countdown
