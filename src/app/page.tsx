@@ -21,7 +21,7 @@ export default function HomePage() {
   });
 
   // Contract address - you can update this when you have the final address
-  const contractAddress = "So11111111111111111111111111111111111111112";
+  const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
 
   useEffect(() => {
     // Set target date to 2 days from now
@@ -59,6 +59,9 @@ export default function HomePage() {
         });
 
         if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Rate limit exceeded. Please try again later.');
+          }
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
@@ -102,8 +105,8 @@ export default function HomePage() {
 
     fetchPriceData();
     
-    // Refresh price data every 30 seconds
-    const priceInterval = setInterval(fetchPriceData, 30000);
+    // Refresh price data every 60 seconds to avoid rate limiting
+    const priceInterval = setInterval(fetchPriceData, 60000);
     
     return () => clearInterval(priceInterval);
   }, [contractAddress]);
