@@ -1,8 +1,40 @@
 'use client';
 
 import Navigation from '@/components/Navigation';
+import { useState, useEffect } from 'react';
 
 export default function HomePage() {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    // Set target date to 2 days from now
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 2);
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance > 0) {
+        setTimeLeft({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="bg-black text-white min-h-screen">
       <Navigation />
@@ -13,7 +45,42 @@ export default function HomePage() {
         <div className="mb-8 sm:mb-12 w-full max-w-md">
           <div className="border border-gray-700 rounded-full px-3 sm:px-4 py-2 flex items-center justify-center space-x-2 text-sm sm:text-base">
             <span className="text-gray-300">Free tier available</span>
-            <span className="text-orange-500">Start tracking now</span>
+            <span className="text-orange-500">Coming Soon</span>
+          </div>
+        </div>
+
+        {/* Countdown Timer */}
+        <div className="mb-8 sm:mb-12 w-full max-w-2xl">
+          <div className="bg-gradient-to-r from-gray-900 to-gray-800 border border-gray-700 rounded-2xl p-6 sm:p-8">
+            <h2 className="text-center text-xl sm:text-2xl font-bold mb-6 text-white">
+              Launching Soon
+            </h2>
+            <div className="grid grid-cols-4 gap-4 sm:gap-6">
+              <div className="text-center">
+                <div className="bg-orange-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold">{timeLeft.days}</div>
+                </div>
+                <div className="text-xs sm:text-sm text-gray-300">Days</div>
+              </div>
+              <div className="text-center">
+                <div className="bg-orange-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold">{timeLeft.hours.toString().padStart(2, '0')}</div>
+                </div>
+                <div className="text-xs sm:text-sm text-gray-300">Hours</div>
+              </div>
+              <div className="text-center">
+                <div className="bg-orange-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold">{timeLeft.minutes.toString().padStart(2, '0')}</div>
+                </div>
+                <div className="text-xs sm:text-sm text-gray-300">Minutes</div>
+              </div>
+              <div className="text-center">
+                <div className="bg-orange-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold">{timeLeft.seconds.toString().padStart(2, '0')}</div>
+                </div>
+                <div className="text-xs sm:text-sm text-gray-300">Seconds</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -27,7 +94,7 @@ export default function HomePage() {
             Track wallet behavior, segment holders, assign reputation scores, and target airdrops — all using on-chain data without Web2 dependencies.
           </p>
           <button className="bg-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/25">
-            Start Free
+            Coming Soon
           </button>
         </div>
 
