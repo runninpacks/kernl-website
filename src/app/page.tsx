@@ -24,9 +24,9 @@ export default function HomePage() {
   const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
 
   useEffect(() => {
-    // Set target date to 2 days from now
-    const now = new Date();
-    const targetDate = new Date(now.getTime() + (2 * 24 * 60 * 60 * 1000)); // 2 days from now
+    // Set a fixed target date that everyone sees the same countdown
+    // This ensures all users see the same countdown regardless of when they visit
+    const targetDate = new Date('2025-01-15T00:00:00Z'); // Fixed target date
 
     const timer = setInterval(() => {
       const currentTime = new Date().getTime();
