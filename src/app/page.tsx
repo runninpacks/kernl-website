@@ -21,7 +21,7 @@ export default function HomePage() {
   });
 
   // Contract address - you can update this when you have the final address
-  const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
+  const contractAddress = "So11111111111111111111111111111111111111112";
 
   useEffect(() => {
     // Set target date to 2 days from now
@@ -59,16 +59,18 @@ export default function HomePage() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch price data');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('Birdeye API response:', data); // Debug log
         
-        if (data.success && data.data) {
+        if (data.success && data.data && Object.keys(data.data).length > 0) {
           const price = data.data.value || 0;
-          const change24h = data.data.change24h || 0;
-          const volume24h = data.data.volume24h || 0;
-          const marketCap = data.data.marketCap || 0;
+          const change24h = data.data.priceChange24h || 0;
+          // For SOL, we'll use placeholder values for volume and market cap since they're not in this endpoint
+          const volume24h = 0; // Would need different endpoint for volume data
+          const marketCap = 0; // Would need different endpoint for market cap data
 
           setPriceData({
             price,
@@ -78,16 +80,24 @@ export default function HomePage() {
             loading: false,
             error: null
           });
+        } else if (data.success && (!data.data || Object.keys(data.data).length === 0)) {
+          // API succeeded but no data available for this contract
+          setPriceData(prev => ({
+            ...prev,
+            loading: false,
+            error: 'No price data available for this contract'
+          }));
         } else {
-          throw new Error('Invalid data format');
+          throw new Error('Invalid API response format');
         }
-             } catch (error) {
-         setPriceData(prev => ({
-           ...prev,
-           loading: false,
-           error: error instanceof Error ? error.message : 'Unknown error'
-         }));
-       }
+      } catch (error) {
+        console.error('Birdeye API error:', error); // Debug log
+        setPriceData(prev => ({
+          ...prev,
+          loading: false,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        }));
+      }
     };
 
     fetchPriceData();
