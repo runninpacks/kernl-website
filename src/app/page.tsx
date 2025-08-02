@@ -11,6 +11,18 @@ export default function HomePage() {
     seconds: 0
   });
 
+  const [priceData, setPriceData] = useState({
+    price: 0,
+    change24h: 0,
+    volume24h: 0,
+    marketCap: 0,
+    loading: true,
+    error: null as string | null
+  });
+
+  // Contract address - you can update this when you have the final address
+  const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
+
   useEffect(() => {
     // Set target date to 2 days from now
     const targetDate = new Date();
@@ -34,6 +46,71 @@ export default function HomePage() {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    const fetchPriceData = async () => {
+      try {
+        const response = await fetch(`https://public-api.birdeye.so/defi/price?address=${contractAddress}&ui_amount_mode=raw`, {
+          headers: {
+            'X-API-KEY': '8ff249064e784babad914121682d3763',
+            'accept': 'application/json',
+            'x-chain': 'solana'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch price data');
+        }
+
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          const price = data.data.value || 0;
+          const change24h = data.data.change24h || 0;
+          const volume24h = data.data.volume24h || 0;
+          const marketCap = data.data.marketCap || 0;
+
+          setPriceData({
+            price,
+            change24h,
+            volume24h,
+            marketCap,
+            loading: false,
+            error: null
+          });
+        } else {
+          throw new Error('Invalid data format');
+        }
+             } catch (error) {
+         setPriceData(prev => ({
+           ...prev,
+           loading: false,
+           error: error instanceof Error ? error.message : 'Unknown error'
+         }));
+       }
+    };
+
+    fetchPriceData();
+    
+    // Refresh price data every 30 seconds
+    const priceInterval = setInterval(fetchPriceData, 30000);
+    
+    return () => clearInterval(priceInterval);
+  }, [contractAddress]);
+
+  const formatNumber = (num: number) => {
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+    return num.toFixed(2);
+  };
+
+  const formatPrice = (price: number) => {
+    if (price < 0.0001) return price.toExponential(4);
+    if (price < 0.01) return price.toFixed(6);
+    if (price < 1) return price.toFixed(4);
+    return price.toFixed(2);
+  };
 
   return (
     <div className="bg-black text-white min-h-screen">
@@ -81,6 +158,69 @@ export default function HomePage() {
                 <div className="text-xs sm:text-sm text-gray-300">Seconds</div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Live Price Section */}
+        <div className="mb-8 sm:mb-12 w-full max-w-2xl">
+          <div className="bg-gradient-to-r from-gray-900 to-gray-800 border border-gray-700 rounded-2xl p-6 sm:p-8">
+            {/* Contract Address */}
+            <div className="text-center mb-6">
+              <h3 className="text-sm sm:text-base text-gray-400 mb-2">Contract Address</h3>
+              <div className="bg-gray-800 rounded-lg p-3 font-mono text-xs sm:text-sm text-orange-500 break-all">
+                {contractAddress}
+              </div>
+            </div>
+
+            {/* Price Data */}
+            {priceData.loading ? (
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-4"></div>
+                <p className="text-gray-400">Loading price data...</p>
+              </div>
+            ) : priceData.error ? (
+              <div className="text-center">
+                <p className="text-red-400">Error loading price data</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                {/* Current Price */}
+                <div className="text-center">
+                  <div className="bg-orange-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                    <div className="text-lg sm:text-xl font-bold">${formatPrice(priceData.price)}</div>
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300">Current Price</div>
+                </div>
+
+                {/* 24h Change */}
+                <div className="text-center">
+                  <div className={`rounded-xl p-3 sm:p-4 mb-2 ${
+                    priceData.change24h >= 0 ? 'bg-green-500' : 'bg-red-500'
+                  } text-white`}>
+                    <div className="text-lg sm:text-xl font-bold">
+                      {priceData.change24h >= 0 ? '+' : ''}{priceData.change24h.toFixed(2)}%
+                    </div>
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300">24h Change</div>
+                </div>
+
+                {/* Volume */}
+                <div className="text-center">
+                  <div className="bg-blue-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                    <div className="text-lg sm:text-xl font-bold">${formatNumber(priceData.volume24h)}</div>
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300">24h Volume</div>
+                </div>
+
+                {/* Market Cap */}
+                <div className="text-center">
+                  <div className="bg-purple-500 text-white rounded-xl p-3 sm:p-4 mb-2">
+                    <div className="text-lg sm:text-xl font-bold">${formatNumber(priceData.marketCap)}</div>
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300">Market Cap</div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
