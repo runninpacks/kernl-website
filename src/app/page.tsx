@@ -24,12 +24,13 @@ export default function HomePage() {
   const contractAddress = "2H1bz8M8cecNZBjgkA8kvoyWUUvv4N9SZvAmnafQf3Mt";
 
   useEffect(() => {
-    // Set target date to a fixed date (2 days from a specific date to ensure consistency)
-    const targetDate = new Date('2025-01-02T00:00:00Z'); // Fixed target date
+    // Set target date to 2 days from now
+    const now = new Date();
+    const targetDate = new Date(now.getTime() + (2 * 24 * 60 * 60 * 1000)); // 2 days from now
 
     const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
+      const currentTime = new Date().getTime();
+      const distance = targetDate.getTime() - currentTime;
 
       if (distance > 0) {
         setTimeLeft({
@@ -202,9 +203,32 @@ export default function HomePage() {
                   {contractAddress}
                 </div>
                 <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(contractAddress);
-                    // You could add a toast notification here
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(contractAddress);
+                      // Optional: Add visual feedback
+                      const button = event?.target as HTMLButtonElement;
+                      if (button) {
+                        const originalText = button.innerHTML;
+                        button.innerHTML = `
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        `;
+                        setTimeout(() => {
+                          button.innerHTML = originalText;
+                        }, 1000);
+                      }
+                    } catch (err) {
+                      console.error('Failed to copy: ', err);
+                      // Fallback for older browsers
+                      const textArea = document.createElement('textarea');
+                      textArea.value = contractAddress;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand('copy');
+                      document.body.removeChild(textArea);
+                    }
                   }}
                   className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-lg transition-colors"
                   title="Copy to clipboard"
